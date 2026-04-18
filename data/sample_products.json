@@ -1,0 +1,182 @@
+[
+  {
+    "asin": "B08N5WRWNW",
+    "title": "Sony WH-1000XM4 Wireless Noise Cancelling Headphones",
+    "category": "Electronics > Headphones",
+    "brand": "Sony",
+    "color": "Black",
+    "material": "Plastic, Foam",
+    "attributes": "over-ear, foldable, 30hr battery, USB-C charging"
+  },
+  {
+    "asin": "B07PXGQC1Q",
+    "title": "Apple AirPods Pro (2nd Generation) Wireless Earbuds",
+    "category": "Electronics > Earbuds",
+    "brand": "Apple",
+    "color": "White",
+    "material": "Plastic, Silicone",
+    "attributes": "in-ear, active noise cancellation, MagSafe charging case"
+  },
+  {
+    "asin": "B09G9MX9QG",
+    "title": "Nike Air Max 270 Men's Running Shoe",
+    "category": "Clothing, Shoes & Jewelry > Men's Shoes",
+    "brand": "Nike",
+    "color": "Black and White",
+    "material": "Mesh, Rubber sole",
+    "attributes": "breathable, cushioned, lightweight, lace-up"
+  },
+  {
+    "asin": "B08H93ZRK9",
+    "title": "Samsung 55-Inch 4K QLED Smart TV",
+    "category": "Electronics > Televisions",
+    "brand": "Samsung",
+    "color": "Black",
+    "material": "Metal, Plastic",
+    "attributes": "4K UHD, HDR, Alexa built-in, slim bezel, wall-mount compatible"
+  },
+  {
+    "asin": "B07VGRJDFY",
+    "title": "Instant Pot Duo 7-in-1 Electric Pressure Cooker",
+    "category": "Kitchen & Dining > Pressure Cookers",
+    "brand": "Instant Pot",
+    "color": "Silver and Black",
+    "material": "Stainless Steel",
+    "attributes": "6 quart, 7 functions, dishwasher-safe, safety lock"
+  },
+  {
+    "asin": "B09B2K4H3R",
+    "title": "Levi's Men's 511 Slim Fit Jeans",
+    "category": "Clothing, Shoes & Jewelry > Men's Jeans",
+    "brand": "Levi's",
+    "color": "Dark Blue Denim",
+    "material": "98% Cotton, 2% Elastane",
+    "attributes": "slim fit, stretch denim, 5-pocket design, zip fly"
+  },
+  {
+    "asin": "B08X6QNMHG",
+    "title": "Kindle Paperwhite 11th Generation E-Reader",
+    "category": "Electronics > E-Readers",
+    "brand": "Amazon",
+    "color": "Black",
+    "material": "Plastic, Glass",
+    "attributes": "6.8-inch display, waterproof, 300 ppi, USB-C, 8GB storage"
+  },
+  {
+    "asin": "B07ZPKN6YR",
+    "title": "Cuisinart 12-Cup Programmable Coffee Maker",
+    "category": "Kitchen & Dining > Coffee Makers",
+    "brand": "Cuisinart",
+    "color": "Stainless Steel",
+    "material": "Stainless Steel, Plastic",
+    "attributes": "12-cup carafe, programmable timer, auto shut-off, brew strength control"
+  },
+  {
+    "asin": "B0BDJ3XCWB",
+    "title": "Adidas Ultraboost 22 Women's Running Shoe",
+    "category": "Clothing, Shoes & Jewelry > Women's Shoes",
+    "brand": "Adidas",
+    "color": "White and Pink",
+    "material": "Primeknit upper, Rubber sole",
+    "attributes": "lightweight, responsive cushioning, lace-up, recycled materials"
+  },
+  {
+    "asin": "B09QD4GXJR",
+    "title": "Anker 65W USB-C Portable Charger Power Bank",
+    "category": "Electronics > Power Banks",
+    "brand": "Anker",
+    "color": "Black",
+    "material": "Plastic",
+    "attributes": "26800mAh, 65W fast charging, 3 ports, LED indicator, compact"
+  },
+  {
+    "asin": "B07TY6FPMT",
+    "title": "Le Creuset Enameled Cast Iron Dutch Oven 5.5 Qt",
+    "category": "Kitchen & Dining > Dutch Ovens",
+    "brand": "Le Creuset",
+    "color": "Flame Orange",
+    "material": "Enameled Cast Iron",
+    "attributes": "5.5 quart, oven safe to 500F, tight lid, loop handles"
+  },
+  {
+    "asin": "B08BHCW2PT",
+    "title": "Bose QuietComfort 45 Wireless Bluetooth Headphones",
+    "category": "Electronics > Headphones",
+    "brand": "Bose",
+    "color": "White Smoke",
+    "material": "Plastic, Protein Leather",
+    "attributes": "over-ear, active noise cancellation, 24hr battery, foldable"
+  },
+  {
+    "asin": "B0887CHVFF",
+    "title": "Patagonia Men's Nano Puff Jacket",
+    "category": "Clothing, Shoes & Jewelry > Men's Jackets",
+    "brand": "Patagonia",
+    "color": "Navy Blue",
+    "material": "100% Recycled Polyester",
+    "attributes": "lightweight, insulated, packable, zip pockets, water-resistant"
+  },
+  {
+    "asin": "B09RDTP23T",
+    "title": "Apple Watch Series 8 GPS 45mm Smartwatch",
+    "category": "Electronics > Smartwatches",
+    "brand": "Apple",
+    "color": "Midnight Aluminum",
+    "material": "Aluminum, Ion-X Glass",
+    "attributes": "45mm, heart rate monitor, crash detection, swimproof, Always-On display"
+  },
+  {
+    "asin": "B08PY3ZM8S",
+    "title": "YETI Rambler 30 oz Stainless Steel Tumbler",
+    "category": "Kitchen & Dining > Tumblers",
+    "brand": "YETI",
+    "color": "Seafoam Green",
+    "material": "Stainless Steel",
+    "attributes": "double-wall vacuum insulated, MagSlider lid, dishwasher safe, 30oz"
+  },
+  {
+    "asin": "B09DFCB313",
+    "title": "Melissa & Doug Wooden Building Blocks Set",
+    "category": "Toys & Games > Building Blocks",
+    "brand": "Melissa & Doug",
+    "color": "Multicolor",
+    "material": "Solid Wood",
+    "attributes": "60 pieces, natural finish, storage bag, ages 2+"
+  },
+  {
+    "asin": "B078J8WPRT",
+    "title": "Vitamix 5200 Professional-Grade High-Performance Blender",
+    "category": "Kitchen & Dining > Blenders",
+    "brand": "Vitamix",
+    "color": "Black",
+    "material": "Polycarbonate container, BPA-free",
+    "attributes": "64oz container, variable speed control, self-cleaning, 2hp motor"
+  },
+  {
+    "asin": "B07QQKG3NB",
+    "title": "Ray-Ban Wayfarer Classic Sunglasses",
+    "category": "Clothing, Shoes & Jewelry > Sunglasses",
+    "brand": "Ray-Ban",
+    "color": "Black frame, Green lens",
+    "material": "Acetate frame, Glass lens",
+    "attributes": "UV400 protection, polarized, unisex, iconic style"
+  },
+  {
+    "asin": "B09HQLY1YM",
+    "title": "Dyson V15 Detect Cordless Vacuum Cleaner",
+    "category": "Home & Kitchen > Vacuum Cleaners",
+    "brand": "Dyson",
+    "color": "Yellow and Nickel",
+    "material": "ABS Plastic, Carbon Fiber",
+    "attributes": "cordless, laser dust detection, 60min battery, HEPA filter, LCD display"
+  },
+  {
+    "asin": "B08KGSD5K6",
+    "title": "KitchenAid Artisan 5-Qt Stand Mixer",
+    "category": "Kitchen & Dining > Stand Mixers",
+    "brand": "KitchenAid",
+    "color": "Empire Red",
+    "material": "Die-cast metal",
+    "attributes": "5 quart bowl, 10 speeds, tilt-head, 59 compatible attachments"
+  }
+]
