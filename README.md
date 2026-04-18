@@ -58,12 +58,12 @@ Amazon Product Data (JSON)
 4. Update `GITHUB_REPO` in Cell 2 with your repo URL
 5. Run all cells in order
 
-### Option B — Local (requires NVIDIA GPU)
+### Option B — Local (requires NVIDIA GPU or Apple Silicon MPS)
 
 ```bash
 # Clone the repo
-git clone https://github.com/YOUR_USERNAME/ecomm-image-gen.git
-cd ecomm-image-gen
+git clone https://github.com/JoeDoan/Quizz1-Challenge.git
+cd Quizz1-Challenge
 
 # Install dependencies
 pip install -r requirements.txt
@@ -129,21 +129,23 @@ All code has been reviewed, tested, and extended by the student.
 
 ## Sample Outputs
 
-*(Add generated image examples here after running the pipeline)*
+*Note: The individual 60 generated images (baseline and structured) are omitted from this repository to save space. You can reproduce them entirely by running the Colab notebook. Instead, we provide side-by-side comparison grids.*
 
-| Product | Baseline | Structured |
-|---------|----------|------------|
-| Sony WH-1000XM4 | `outputs/baseline/B08N5WRWNW_baseline_seed0.png` | `outputs/structured/B08N5WRWNW_structured_seed0.png` |
+| Product | Comparison Grid | Verdict |
+|---------|-----------------|---------|
+| **Nike Air Max 270** | [`outputs/grid_B09G9MX9QG.png`](outputs/grid_B09G9MX9QG.png) | ⭐ **Huge Improvement:** Baseline created a chaotic cartoon collage; structured created perfect isolated studio photography. |
+| **Apple AirPods Pro** | [`outputs/grid_B07PXGQC1Q.png`](outputs/grid_B07PXGQC1Q.png) | ⭐ **Success:** High structural consistency and clean white background. |
+| **Levi's 511 Jeans** | [`outputs/grid_B09B2K4H3R.png`](outputs/grid_B09B2K4H3R.png) | ⚠️ **Failure Case:** Baseline generated close-up pants/texture, structured generated an actual human model. |
 
 ---
 
 ## Key Findings
 
-1. Structured prompts achieve **15–30% higher CLIP scores** than naive prompts
-2. Negative prompts are critical for eliminating watermarks and cluttered backgrounds
-3. Consistency (SSIM) improves when prompts provide clear style anchors
-4. Failure cases arise with complex 3D shapes and ambiguous metadata
-5. Trade-off: heavy structure reduces cross-product visual diversity
+1. **SSIM Consistency Improvement:** Structured prompts anchor the model's visual understanding much stronger. The average structural similarity across different seeds improved significantly (+0.13 average gain, from 0.34 to 0.47).
+2. **CLIP Score Nuances:** While structured prompts give better subjective visuals, average CLIP scores occasionally regress slightly (0.307 down to 0.303). Complex prompts with many details sometimes dilute the primary subject token concentration for the CLIP text encoder.
+3. **Negative Prompts are Essential:** They drastically reduced watermarks, messy background clutter, and illustration-style generations present in the baseline outputs.
+4. **Apparel Limitation:** Diffusion models struggle to generate "ghost mannequin" or flat-laid clothing without defaulting to generating human models wearing them, as seen in the Levi's Jeans grid.
+5. **Appliance "Knowledge" Bias:** For standard appliances (Instant Pot, Coffee Maker), the naive baseline and structured prompts yielded very similar results because the diffusion model already has a strong canonical representation of these items.
 
 ---
 
