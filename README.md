@@ -90,7 +90,7 @@ python -m src.pipeline
 |--------|-------------|------|
 | CLIP Score | Text-image alignment similarity | `openai/CLIP` |
 | SSIM | Consistency across seeds | `scikit-image` |
-| Diversity | Perceptual spread across products | pixel MAD |
+| Diversity | Perceptual spread across seeds | pixel MAD |
 | Visual Grid | Side-by-side qualitative comparison | `matplotlib` |
 
 ---
@@ -100,6 +100,7 @@ python -m src.pipeline
 - **Source:** [Amazon Product Dataset](https://nijianmo.github.io/amazon/index)
 - **Format:** JSON with fields: `asin`, `title`, `category`, `brand`, `color`, `material`, `attributes`
 - **Sample:** 20 curated products across Electronics, Clothing, Kitchen & Dining categories in `data/sample_products.json`
+- **Evaluated:** 10 products were evaluated end-to-end (baseline + structured) due to Colab GPU quota. The full 20-product dataset can be reproduced by running all cells in the Colab notebook.
 
 ---
 
@@ -136,6 +137,13 @@ All code has been reviewed, tested, and extended by the student.
 | **Nike Air Max 270** | [`outputs/grid_B09G9MX9QG.png`](outputs/grid_B09G9MX9QG.png) | ⭐ **Huge Improvement:** Baseline created a chaotic cartoon collage; structured created perfect isolated studio photography. |
 | **Apple AirPods Pro** | [`outputs/grid_B07PXGQC1Q.png`](outputs/grid_B07PXGQC1Q.png) | ⭐ **Success:** High structural consistency and clean white background. |
 | **Levi's 511 Jeans** | [`outputs/grid_B09B2K4H3R.png`](outputs/grid_B09B2K4H3R.png) | ⚠️ **Failure Case:** Baseline generated close-up pants/texture, structured generated an actual human model. |
+
+### Evaluation Charts
+
+| Chart | Description |
+|-------|-------------|
+| [`outputs/clip_score_comparison.png`](outputs/clip_score_comparison.png) | CLIP score (prompt alignment) — baseline vs. structured |
+| [`outputs/ssim_consistency_comparison.png`](outputs/ssim_consistency_comparison.png) | SSIM consistency — structured prompts dramatically improve cross-seed reproducibility |
 
 ---
 

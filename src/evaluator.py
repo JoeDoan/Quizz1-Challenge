@@ -193,15 +193,23 @@ def evaluate_results(
         base_ssim   = compute_ssim_consistency(base_paths)
         struct_ssim = compute_ssim_consistency(struct_paths)
 
+        # Diversity score (perceptual distance across seeds)
+        base_diversity   = compute_diversity_score(base_paths)
+        struct_diversity = compute_diversity_score(struct_paths)
+
         record = {
             "asin":                    asin,
             "title":                   title,
+            "baseline_prompt":         base_rec.get("prompt", ""),
+            "structured_prompt":       struct_rec.get("prompt", ""),
             "baseline_clip_score":     round(base_clip,   4),
             "structured_clip_score":   round(struct_clip, 4),
             "clip_improvement":        round(struct_clip - base_clip, 4),
             "baseline_ssim":           round(base_ssim,   4),
             "structured_ssim":         round(struct_ssim, 4),
             "ssim_improvement":        round(struct_ssim - base_ssim, 4),
+            "baseline_diversity":      round(base_diversity,   4),
+            "structured_diversity":    round(struct_diversity, 4),
             "baseline_images":         base_paths,
             "structured_images":       struct_paths,
             "has_error":               bool(base_rec.get("error") or struct_rec.get("error")),
@@ -211,7 +219,8 @@ def evaluate_results(
             f"  {title[:40]:<40} | "
             f"CLIP: {base_clip:.3f} → {struct_clip:.3f} "
             f"(+{struct_clip - base_clip:.3f}) | "
-            f"SSIM: {base_ssim:.3f} → {struct_ssim:.3f}"
+            f"SSIM: {base_ssim:.3f} → {struct_ssim:.3f} | "
+            f"Div: {base_diversity:.3f} / {struct_diversity:.3f}"
         )
 
     # Save results
@@ -225,30 +234,36 @@ def evaluate_results(
 
 def print_summary_table(evaluation: List[Dict]) -> None:
     """Print a formatted summary table to stdout."""
-    print("\n" + "=" * 90)
-    print(f"{'Product':<42} | {'CLIP Base':>9} | {'CLIP Strct':>10} | {'SSIM Base':>9} | {'SSIM Strct':>10}")
-    print("=" * 90)
+    print("\n" + "=" * 115)
+    print(f"{'Product':<42} | {'CLIP Base':>9} | {'CLIP Strct':>10} | {'SSIM Base':>9} | {'SSIM Strct':>10} | {'Div Base':>8} | {'Div Strct':>9}")
+    print("=" * 115)
     for rec in evaluation:
         print(
             f"{rec['title'][:40]:<42} | "
             f"{rec['baseline_clip_score']:>9.4f} | "
             f"{rec['structured_clip_score']:>10.4f} | "
             f"{rec['baseline_ssim']:>9.4f} | "
-            f"{rec['structured_ssim']:>10.4f}"
+            f"{rec['structured_ssim']:>10.4f} | "
+            f"{rec.get('baseline_diversity', 0):>8.4f} | "
+            f"{rec.get('structured_diversity', 0):>9.4f}"
         )
-    print("=" * 90)
+    print("=" * 115)
 
     # Averages
     avg_base_clip   = np.mean([r["baseline_clip_score"]   for r in evaluation])
     avg_struct_clip = np.mean([r["structured_clip_score"] for r in evaluation])
     avg_base_ssim   = np.mean([r["baseline_ssim"]         for r in evaluation])
     avg_struct_ssim = np.mean([r["structured_ssim"]       for r in evaluation])
+    avg_base_div    = np.mean([r.get("baseline_diversity", 0)   for r in evaluation])
+    avg_struct_div  = np.mean([r.get("structured_diversity", 0) for r in evaluation])
 
     print(f"\nAVERAGES:")
     print(f"  CLIP Score  — Baseline: {avg_base_clip:.4f}  |  Structured: {avg_struct_clip:.4f}  "
           f"| Δ = {avg_struct_clip - avg_base_clip:+.4f}")
     print(f"  SSIM        — Baseline: {avg_base_ssim:.4f}  |  Structured: {avg_struct_ssim:.4f}  "
           f"| Δ = {avg_struct_ssim - avg_base_ssim:+.4f}")
+    print(f"  Diversity   — Baseline: {avg_base_div:.4f}  |  Structured: {avg_struct_div:.4f}  "
+          f"| Δ = {avg_struct_div - avg_base_div:+.4f}")
 
 
 def generate_evaluation_grid(evaluation: List[Dict], output_dir: str) -> None:
@@ -282,4 +297,49 @@ def generate_evaluation_grid(evaluation: List[Dict], output_dir: str) -> None:
     ensure_dir(output_dir)
     plt.savefig(chart_path, dpi=120, bbox_inches="tight")
     plt.close()
-    logger.info(f"Evaluation chart saved → {chart_path}")
+    logger.info(f"CLIP chart saved → {chart_path}")
+
+
+def generate_ssim_chart(evaluation: List[Dict], output_dir: str) -> None:
+    """
+    Create a matplotlib figure showing SSIM consistency comparison bar chart.
+    This visualizes the strongest result: structured prompts significantly
+    improve cross-seed consistency.
+    """
+    import matplotlib.pyplot as plt
+
+    titles        = [r["title"][:25] + "..." for r in evaluation]
+    base_ssim     = [r["baseline_ssim"]     for r in evaluation]
+    struct_ssim   = [r["structured_ssim"]   for r in evaluation]
+
+    x     = np.arange(len(titles))
+    width = 0.35
+
+    fig, ax = plt.subplots(figsize=(max(12, len(titles) * 1.2), 6))
+    ax.bar(x - width/2, base_ssim,   width, label="Baseline (naive)",  color="#e67e22", alpha=0.85)
+    ax.bar(x + width/2, struct_ssim, width, label="Structured prompt", color="#3498db", alpha=0.85)
+
+    ax.set_xlabel("Product", fontsize=12)
+    ax.set_ylabel("SSIM (cross-seed consistency)", fontsize=12)
+    ax.set_title("Baseline vs. Structured Prompt — SSIM Consistency Comparison", fontsize=14, fontweight="bold")
+    ax.set_xticks(x)
+    ax.set_xticklabels(titles, rotation=45, ha="right", fontsize=8)
+    ax.legend(fontsize=11)
+    ax.set_ylim(0, 1.0)
+    ax.grid(axis="y", alpha=0.3)
+
+    # Add average improvement annotation
+    avg_improvement = np.mean([s - b for b, s in zip(base_ssim, struct_ssim)])
+    ax.annotate(
+        f"Avg SSIM Improvement: {avg_improvement:+.3f}",
+        xy=(0.98, 0.95), xycoords="axes fraction",
+        ha="right", va="top", fontsize=11, fontweight="bold",
+        bbox=dict(boxstyle="round,pad=0.3", facecolor="#d5f5e3", edgecolor="#2ecc71", alpha=0.9),
+    )
+
+    plt.tight_layout()
+    chart_path = os.path.join(output_dir, "ssim_consistency_comparison.png")
+    ensure_dir(output_dir)
+    plt.savefig(chart_path, dpi=120, bbox_inches="tight")
+    plt.close()
+    logger.info(f"SSIM chart saved → {chart_path}")
