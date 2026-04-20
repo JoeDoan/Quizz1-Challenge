@@ -6,3 +6,7 @@ outputs/structured/*
 !outputs/baseline/.gitkeep
 !outputs/structured/.gitkeep
 .ipynb_checkpoints/
+.pylibs/
+docs/video_qr.png
+docs/preview_*.png
+Tinas_Fixed_Project/
