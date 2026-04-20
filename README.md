@@ -157,6 +157,15 @@ All code has been reviewed, tested, and extended by the student.
 
 ---
 
+## Demo Video & Links
+
+| Resource | URL |
+|----------|-----|
+| **Demo Video** | [Watch on Panopto](https://umsystem.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=2a9f4df2-cedb-4c1e-bb3d-b432016393f5) |
+| **GitHub Repository** | [github.com/JoeDoan/Quizz1-Challenge](https://github.com/JoeDoan/Quizz1-Challenge) |
+
+---
+
 ## Bonus
 
 - **Video Generation:** `outputs/product_showcase.mp4` — animated slideshow of structured product images (see Colab notebook Step 10)

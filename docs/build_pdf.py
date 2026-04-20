@@ -228,6 +228,11 @@ def draw_cover(canvas, doc):
     canvas.setFillColor(HexColor('#88a4cc'))
     canvas.drawCentredString(cx, h - 460, 'github.com/JoeDoan/Quizz1-Challenge')
 
+    # Video link
+    canvas.setFont('Helvetica', 9)
+    canvas.setFillColor(HexColor('#7ab4ff'))
+    canvas.drawCentredString(cx, h - 478, 'Demo Video: umsystem.hosted.panopto.com')
+
     # Meta boxes
     meta = [('Course', 'CS 5542'), ('Track', 'Option 1'), ('Model', 'SDXL 1.0'), ('Date', 'Apr 20, 2026')]
     box_w = 90
@@ -527,6 +532,9 @@ def sec8():
 def sec9():
     return section(9, 'Bonus — Multimodal Extension') + [
         P('The project implements a <b>video generation extension</b> — turning the best structured product images into an animated showcase video.'),
+        P('Demo Video', 'h3'),
+        info('<b>Full Demo Video:</b> <font color="#1a56e8">https://umsystem.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=2a9f4df2-cedb-4c1e-bb3d-b432016393f5</font><br/>A walkthrough of the complete pipeline — from input data through prompt generation, SDXL inference, and evaluation results.', 'blue'),
+        P('Product Showcase Video', 'h3'),
         info('<b>outputs/product_showcase.mp4</b> — A 30-second animated slideshow of the best structured product images, generated automatically by the Colab notebook using imageio-ffmpeg.', 'green'),
         P('Extension Possibilities', 'h3'),
         tbl(['Extension','Tool','Status'],
@@ -574,7 +582,7 @@ def page_footer(canvas, doc):
     canvas.setFillColor(G500)
     canvas.drawCentredString(A4[0]/2, 14*mm, f'Page {doc.page - 1}')
     canvas.drawString(18*mm, 14*mm, 'CS 5542 | Joe Doan')
-    canvas.drawRightString(A4[0]-18*mm, 14*mm, 'github.com/JoeDoan/Quizz1-Challenge')
+    canvas.drawRightString(A4[0]-18*mm, 14*mm, 'GitHub | Demo Video (Panopto)')
     canvas.restoreState()
 
 # ── Build ────────────────────────────────────────────────────────────────────
