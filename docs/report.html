@@ -137,8 +137,15 @@
   }
 
   /* ── PAGE LAYOUT ────────────────────────────────────── */
+  @page {
+    size: A4;
+    margin: 18mm 16mm 18mm 16mm;
+  }
   .page { padding: 48px 52px; max-width: 800px; margin: 0 auto; }
-  .page-break { page-break-before: always; }
+  .page-break {
+    page-break-before: always;
+    break-before: page;
+  }
 
   /* ── SECTION HEADERS ─────────────────────────────────── */
   .section-tag {
@@ -406,10 +413,47 @@
   }
 
   @media print {
-    body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    .page-break { page-break-before: always; }
-    .cover { page-break-after: always; min-height: 100vh; }
+    /* Force color backgrounds to print */
+    body {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      color-adjust: exact !important;
+      background: #fff !important;
+    }
+
+    /* Cover page: force full page, break after */
+    .cover {
+      min-height: 100vh;
+      page-break-after: always;
+      break-after: page;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    /* Each .page-break section starts a new page */
+    .page-break {
+      page-break-before: always !important;
+      break-before: page !important;
+    }
+
+    /* Prevent elements from being split between pages */
+    .infobox, .finding, .metric-grid, .compare-grid,
+    .pipeline-step, table, .failure-card, .metric-card {
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+
+    /* Headings should not be orphaned at page bottom */
+    h2, h3 {
+      page-break-after: avoid;
+      break-after: avoid;
+    }
+
+    /* Links should not show underlines */
     a { color: inherit; text-decoration: none; }
+
+    /* Remove web-only shadows */
+    .page { box-shadow: none; }
   }
 </style>
 </head>
