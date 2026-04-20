@@ -228,10 +228,10 @@ def draw_cover(canvas, doc):
     canvas.setFillColor(HexColor('#88a4cc'))
     canvas.drawCentredString(cx, h - 460, 'github.com/JoeDoan/Quizz1-Challenge')
 
-    # Video link
+    # Video note (no URL to avoid PDF viewer auto-linking to wrong page)
     canvas.setFont('Helvetica', 9)
     canvas.setFillColor(HexColor('#7ab4ff'))
-    canvas.drawCentredString(cx, h - 478, 'Demo Video: umsystem.hosted.panopto.com')
+    canvas.drawCentredString(cx, h - 478, 'Demo Video on Panopto  |  Full link in Section 9')
 
     # Meta boxes
     meta = [('Course', 'CS 5542'), ('Track', 'Option 1'), ('Model', 'SDXL 1.0'), ('Date', 'Apr 20, 2026')]
