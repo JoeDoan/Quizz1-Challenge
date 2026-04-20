@@ -179,48 +179,91 @@ def delta_fmt(v):
     elif v < -0.01: return f'<font color="#d63b3b"><b>{v:.4f}</b></font>'
     else: return f'<font color="#e07b1a">{v:+.4f}</font>'
 
-# ── Cover ────────────────────────────────────────────────────────────────────
+# ── Cover (drawn on canvas for full-page fill) ──────────────────────────────
+# We'll use the page_footer callback for page 1 to draw the cover background,
+# and use Spacer + PageBreak in the story.
+
+def draw_cover(canvas, doc):
+    """Draw the cover page background and text directly on canvas."""
+    w, h = A4
+    # Full-page navy background
+    canvas.saveState()
+    canvas.setFillColor(B1)
+    canvas.rect(0, 0, w, h, fill=1, stroke=0)
+
+    cx = w / 2  # center x
+
+    # Badge
+    canvas.setFont('Helvetica-Bold', 8)
+    canvas.setFillColor(HexColor('#a8c4ff'))
+    canvas.drawCentredString(cx, h - 200, 'CS 5542 — BIG DATA ANALYTICS & GENAI')
+
+    # Title
+    canvas.setFillColor(W)
+    canvas.setFont('Helvetica-Bold', 28)
+    canvas.drawCentredString(cx, h - 260, 'Automated E-Commerce')
+    canvas.setFont('Helvetica-Bold', 28)
+    canvas.setFillColor(HexColor('#7ab4ff'))
+    canvas.drawCentredString(cx, h - 295, 'Product Image Generation')
+
+    # Subtitle
+    canvas.setFont('Helvetica', 11)
+    canvas.setFillColor(HexColor('#aabedf'))
+    canvas.drawCentredString(cx, h - 340, 'A controlled image generation pipeline using Stable Diffusion XL —')
+    canvas.drawCentredString(cx, h - 356, 'comparing naive versus structured prompting strategies')
+    canvas.drawCentredString(cx, h - 372, 'for real-world e-commerce product photography.')
+
+    # Decorative line
+    canvas.setStrokeColor(HexColor('#7ab4ff'))
+    canvas.setLineWidth(2)
+    canvas.line(cx - 40, h - 400, cx + 40, h - 400)
+
+    # Author
+    canvas.setFont('Helvetica-Bold', 16)
+    canvas.setFillColor(W)
+    canvas.drawCentredString(cx, h - 440, 'Joe Doan')
+
+    # GitHub
+    canvas.setFont('Courier', 10)
+    canvas.setFillColor(HexColor('#88a4cc'))
+    canvas.drawCentredString(cx, h - 460, 'github.com/JoeDoan/Quizz1-Challenge')
+
+    # Meta boxes
+    meta = [('Course', 'CS 5542'), ('Track', 'Option 1'), ('Model', 'SDXL 1.0'), ('Date', 'Apr 20, 2026')]
+    box_w = 90
+    total_w = len(meta) * box_w + (len(meta)-1) * 12
+    start_x = cx - total_w / 2
+
+    for i, (label, value) in enumerate(meta):
+        bx = start_x + i * (box_w + 12)
+        by = h - 540
+        # Box background
+        canvas.setFillColor(HexColor('#1a2e5a'))
+        canvas.roundRect(bx, by, box_w, 42, 4, fill=1, stroke=0)
+        # Label
+        canvas.setFont('Helvetica', 7)
+        canvas.setFillColor(HexColor('#88a4cc'))
+        canvas.drawCentredString(bx + box_w/2, by + 28, label.upper())
+        # Value
+        canvas.setFont('Helvetica-Bold', 10)
+        canvas.setFillColor(W)
+        canvas.drawCentredString(bx + box_w/2, by + 10, value)
+
+    # Footer
+    canvas.setFont('Helvetica', 9)
+    canvas.setFillColor(HexColor('#88a4cc'))
+    canvas.drawCentredString(cx, h - 600, 'University of Missouri–Kansas City  |  Individual Submission')
+
+    canvas.restoreState()
+
 def cover():
-    rows = [[
-        Paragraph('CS 5542 — BIG DATA ANALYTICS & GENAI', ST['cBadge']),
-        SP(14),
-        Paragraph('Automated E-Commerce<br/>Product Image Generation', ST['cTitle']),
-        SP(6),
-        Paragraph(
-            'A controlled image generation pipeline using Stable Diffusion XL —<br/>'
-            'comparing naive versus structured prompting strategies<br/>'
-            'for real-world e-commerce product photography.', ST['cSub']),
-        SP(24),
-        Paragraph('Joe Doan', ST['cAuthor']),
-        SP(4),
-        Paragraph('github.com/JoeDoan/Quizz1-Challenge', ST['cGH']),
-        SP(30),
-        Table([[
-            Table([[Paragraph('Course', ST['cLabel'])],[Paragraph('CS 5542', ST['cMeta'])]],
-                  style=TableStyle([('ALIGN',(0,0),(-1,-1),'CENTER')])),
-            Table([[Paragraph('Track', ST['cLabel'])],[Paragraph('Option 1', ST['cMeta'])]],
-                  style=TableStyle([('ALIGN',(0,0),(-1,-1),'CENTER')])),
-            Table([[Paragraph('Model', ST['cLabel'])],[Paragraph('SDXL 1.0', ST['cMeta'])]],
-                  style=TableStyle([('ALIGN',(0,0),(-1,-1),'CENTER')])),
-            Table([[Paragraph('Date', ST['cLabel'])],[Paragraph('Apr 20, 2026', ST['cMeta'])]],
-                  style=TableStyle([('ALIGN',(0,0),(-1,-1),'CENTER')])),
-        ]], colWidths=[95]*4,
-           style=TableStyle([('ALIGN',(0,0),(-1,-1),'CENTER'),
-                             ('VALIGN',(0,0),(-1,-1),'TOP')])),
-        SP(30),
-        Paragraph('University of Missouri–Kansas City  |  Individual Submission', ST['cLabel']),
-    ]]
-    t = Table(rows, colWidths=[440],
-              style=TableStyle([
-                  ('BACKGROUND',(0,0),(-1,-1),B1),
-                  ('ALIGN',(0,0),(-1,-1),'CENTER'),
-                  ('VALIGN',(0,0),(-1,-1),'MIDDLE'),
-                  ('TOPPADDING',(0,0),(-1,-1),50),
-                  ('BOTTOMPADDING',(0,0),(-1,-1),50),
-                  ('LEFTPADDING',(0,0),(-1,-1),30),
-                  ('RIGHTPADDING',(0,0),(-1,-1),30),
-              ]))
-    return [t, PB()]
+    """Return story elements for page 1 (just a spacer + page break; drawing is done in callback)."""
+    return [Spacer(1, 1), PB()]
+
+def cover_callback(canvas, doc):
+    """Called only on page 1."""
+    if doc.page == 1:
+        draw_cover(canvas, doc)
 
 # ── Section builders ─────────────────────────────────────────────────────────
 def sec1():
@@ -556,7 +599,7 @@ def main():
     story += sec9()
     story += sec10()
 
-    doc.build(story, onFirstPage=page_footer, onLaterPages=page_footer)
+    doc.build(story, onFirstPage=cover_callback, onLaterPages=page_footer)
     print(f'✅ PDF generated → {OUT}')
     print(f'   Pages: {doc.page}')
 
